@@ -13,7 +13,7 @@ ENV PGWORKSPACE="/workspace/.pgsql"
 ENV PGDATA="$PGWORKSPACE/data"
 
 # Install PostgreSQL
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(grep VERSION_CODENAME /etc/os-release | cut -d '=' -f 2)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     apt-get update && apt-get install -y postgresql-12 postgresql-contrib-12
 
@@ -36,3 +36,4 @@ ENV PGDATABASE="postgres"
 # Switch to the user gitpod and copy a script
 # USER gitpod
 # COPY --chown=gitpod:gitpod postgresql-hook.bash $HOME/.bashrc.d/200-postgresql-launch
+
